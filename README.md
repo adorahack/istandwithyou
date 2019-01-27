@@ -1,4 +1,4 @@
-# stand
+# I Stand With You
 
 ## Project setup
 ```
