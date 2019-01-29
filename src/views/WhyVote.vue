@@ -2,7 +2,7 @@
   <div class="vote">
     <Header title="Why would you vote for me?"/>
     <b-modal hide-footer ref="voteModalRef" id="voteModal" >
-        <h5 class="thanks text-center">Thank you for standing with Atiku</h5>
+        <h5 class="thanks text-center">Thank you for standing with {{this.candidateRecord.name}}</h5>
         <div class="row">
           <div class="col-6">
             <img src="https://via.placeholder.com/300" class="img-downloadable" />
@@ -23,22 +23,22 @@
         <div class="row candidate">
             <div class="col-md-4 col-sm-4 col-12">
               <div class="image" :style="{ backgroundImage: `url(https://via.placeholder.com/300)` }"></div>
-              <p class="text-center">Atiku Abubakar (PDP) </p>
+              <p class="text-center">{{this.candidateRecord.name}} ({{this.candidateRecord.party}}) </p>
             </div>
             <div class="col-md-1 col-sm-1 col-12"></div>
             <div class="col-md-7 col-sm-7 col-12">
               <form>
                 <div class="form-group">
                   <label>My nickname is:</label>
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" v-model="name"/>
                 </div>
                 <div class="form-group">
-                  <label>I would vote for Oby Ezekwesili because:</label>
-                  <textarea class="form-control"></textarea>
+                  <label>I would vote for {{this.candidateRecord.name}} because:</label>
+                  <textarea class="form-control" v-model="reason"></textarea>
                 </div>
                 <div class="form-group">
                   <label>
-                    <input type="checkbox" />&nbsp;&nbsp;Appear anonymous
+                    <input type="checkbox" v-model="anonymous"/>&nbsp;&nbsp;Appear anonymous
                     </label>
                 </div>
                 <div class="row">
@@ -58,6 +58,7 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import { candidate, addVote } from '@/utils/data.js'
 
 export default {
   name: 'vote',
@@ -65,10 +66,48 @@ export default {
     Header,
     Footer
   },
+  data(){
+    return{
+      id: this.$route.params.id,
+      name: "",
+      reason: "",
+      anonymous: false,
+      candidateRecord: {}
+    }
+  },
+  mounted (){
+    this.getCandidate()
+  },
   methods: {
+    getCandidate: function(){
+      candidate(this.id).then((results) => {
+        ! results.id && this.$router.push('/error')
+        this.candidateRecord = results
+      })
+    },
+    vote () {
+      let candidateVote =
+      {
+        candidate_id: this.$route.params.id,
+        name: this.name,
+        reason: this.reason,
+        anonymous: this.anonymous,
+      }
+      addVote(candidateVote).then((results) => {
+        console.log("Resss",results)
+        // image generation logic
+
+        // show modal
+      })
+    },
     handleButtonClick (e) {
       e.preventDefault()
       // image generation logic
+
+      // save to db
+      this.vote()
+
+      // show modal
       this.$refs.voteModalRef.show()
     },
     hideModal () {
@@ -96,20 +135,20 @@ p.small{
 font-size: 13px;
 }
 .modal-header .close{
-    opacity: 1;
-    font-weight: 100;
-    font-size: 60px;
-    line-height: 0;
-    padding: 10px 20px;
-    margin-top: 0px;
-    outline: none;
+  opacity: 1;
+  font-weight: 100;
+  font-size: 60px;
+  line-height: 0;
+  padding: 10px 20px;
+  margin-top: 0px;
+  outline: none;
 }
 .modal-header{
-    border-bottom: none;
+  border-bottom: none;
 }
 h5.thanks{
-    font-family: 'Pacifico', cursive;
-    margin-bottom: 30px;
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 30px;
 }
 .bg-green{
   background: #008751;
@@ -127,27 +166,30 @@ h5.thanks{
   margin-left: 20px;
 }
 .candidate .image{
-       width: 100%;
-       padding-top: 100%;
-       border-radius: 50%;
-       background-position: center;
-       background-repeat: no-repeat;
-       background-size: cover;
-    }
-    .candidate p{
-        height: 73px;
-        overflow: hidden;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        font-weight: bold;
-        color: black;
-    }
-    textarea{
-      height: 150px;
-    }
-    input, textarea{
-      outline: none !important;
-      box-shadow: none !important;
-    }
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+strong{
+  font-weight: 600 !important;
+}
+.candidate p{
+  height: 73px;
+  overflow: hidden;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  color: black;
+}
+textarea{
+  height: 150px;
+}
+input, textarea{
+  outline: none !important;
+  box-shadow: none !important;
+}
 </style>
 

@@ -1,7 +1,7 @@
 <template>
-    <div class="candidate col-md-3 col-sm-6 col-12">
+    <div class="candidate col-md-3 col-sm-6 col-6">
         <router-link :to="{ name: 'vote', params: { id: candidate.id }}">
-            <div class="image" :style="{ backgroundImage: `url('${candidate.avatar}')` }"></div>
+            <div class="image" :style="{ backgroundImage: `url('https://via.placeholder.com/300')` }"></div>
             <p class="text-center">
                 {{candidate.name}} ({{candidate.party}})
             </p>
@@ -33,7 +33,7 @@ export default {
     height: 73px;
     overflow: hidden;
     margin-top: 10px;
-    font-weight: bold;
+    font-weight: 600;
     color: black;
 }
 .candidate{

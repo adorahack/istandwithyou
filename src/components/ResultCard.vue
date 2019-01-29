@@ -33,6 +33,6 @@ export default {
 }
 .green{
     color: #008751;
-    font-weight: bold;
+    font-weight: 600;
 }
 </style>

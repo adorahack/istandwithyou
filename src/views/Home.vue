@@ -4,10 +4,7 @@
     <WelcomeModal />
     <div class="container body">
         <div class="row">
-            <Candidate v-bind:candidate="candidate" />
-            <Candidate v-bind:candidate="candidate" />
-            <Candidate v-bind:candidate="candidate" />
-            <Candidate v-bind:candidate="candidate" />
+            <Candidate v-for="candidate in candidates" :key="candidate.id" v-bind:candidate="candidate" />
         </div>
     </div>
     <Footer />
@@ -19,6 +16,7 @@ import Header from '@/components/Header.vue'
 import WelcomeModal from '@/components/WelcomeModal.vue'
 import Candidate from '@/components/Candidate.vue'
 import Footer from '@/components/Footer.vue'
+import { candidates } from '@/utils/data.js'
 
 export default {
   name: 'home',
@@ -28,15 +26,21 @@ export default {
     Candidate,
     Footer
   },
+  mounted (){
+    this.getCandidates()
+  },
   data(){
-        return{
-            candidate: {
-                id: 1,
-                name: "President Muhammadu Buhari",
-                party: "APC",
-                avatar: "https://via.placeholder.com/300"
-            }
-        }
+    return{
+      candidates: []
     }
+  },
+  methods: {
+    getCandidates: function(){
+      candidates().then((results) => {
+        console.log(results)
+        this.candidates = results
+      })
+    }
+  }
 }
 </script>

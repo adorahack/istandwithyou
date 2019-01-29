@@ -26,6 +26,11 @@ export default new Router({
       path: '/vote/:id',
       name: 'vote',
       component: () => import('./views/WhyVote.vue')
+    },
+    {
+      path: "*", 
+      name: 'error',
+      component: () => import('./views/PageNotFound.vue')
     }
   ]
 })
