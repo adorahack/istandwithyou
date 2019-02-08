@@ -1,7 +1,11 @@
-const host = 'http://localhost:8002'
+const host = 'https://api.istandwithyou.com.ng'
 
 export const candidates = () =>
   fetch(`${host}/candidate`)
+    .then(res => res.json())
+
+export const votes = () =>
+  fetch(`${host}/vote`)
     .then(res => res.json())
 
 export const candidate = (id) =>

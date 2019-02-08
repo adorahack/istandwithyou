@@ -1,8 +1,9 @@
 <template>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="resultcard">
-            <p class="reason">{{reason}}</p>
-            <p class="green">- Anonymous</p>
+            <p class="green">{{ reason.name }}</p>
+            <p class="reason">{{ reason.reason }}</p>
+            <p><small class="green">- {{ reason.candidate.name }} ({{ reason.candidate.party }})</small></p>
         </div>
     </div>
 </template>
@@ -10,7 +11,7 @@
 export default {
     name: 'ResultCard',
     props: {
-        reason: String
+        reason: Object
     }
 }
 </script>
@@ -19,10 +20,11 @@ export default {
 .reason{
     height: 190px;
     overflow: hidden;
+    
 }
 .resultcard{
     width: 100%;
-    height: 300px;
+    height: 320px;
     background: rgb(248, 247, 247);
     border-radius: 30px;
     padding: 30px;
@@ -34,5 +36,6 @@ export default {
 .green{
     color: #008751;
     font-weight: 600;
+    margin-bottom: 5px;
 }
 </style>
