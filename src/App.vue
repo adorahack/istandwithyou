@@ -12,8 +12,11 @@
   font-weight: 600;
 }
 .body{
-   min-height: calc(100vh - 250px);
+   min-height: calc(100vh - 240px);
    margin-bottom: 40px;
+}
+#app{
+  overflow: hidden !important;
 }
 @media only screen and (max-width: 600px) {
   h1.title{

@@ -1,7 +1,7 @@
 <template>
     <div class="candidate col-md-3 col-sm-6 col-6">
         <router-link :to="{ name: 'vote', params: { id: candidate.id }}">
-            <div class="image" :style="{ backgroundImage: `url('https://via.placeholder.com/300')` }"></div>
+            <div class="image" :style="{ backgroundImage: `url(` + require(`@/assets/${candidate.id}.jpg`) + `)`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }"></div>
             <p class="text-center">
                 {{candidate.name}} ({{candidate.party}})
             </p>
@@ -22,9 +22,6 @@ export default {
     width: 100%;
     padding-top: 100%;
     border-radius: 50%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 .candidate:hover p{
     color: #008751;

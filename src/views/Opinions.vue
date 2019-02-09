@@ -3,32 +3,68 @@
     <Header title="Opinions so far"/>
     <div class="container body">
         <div class="row">
-            <ResultCard v-bind:reason="reason" />
-            <ResultCard v-bind:reason="reason" />
-            <ResultCard v-bind:reason="reason" />
-            <ResultCard v-bind:reason="reason" />
+          <ResultCard  v-for="opinion in opinions" :key="opinion.id" v-bind:reason="opinion" />     
         </div>
     </div>
     <Footer />
   </div>
 </template>
 
+
 <script>
 import Header from '@/components/Header.vue'
 import ResultCard from '@/components/ResultCard.vue'
-import Footer from '@/components/ResultCard.vue'
+import Footer from '@/components/Footer.vue'
+import { votes } from '@/utils/data.js'
 
 export default {
   name: 'opinions',
   components: {
     Header,
     ResultCard,
-    Footer
+    Footer,
+  },
+  methods: {
+    getOpinions(){
+      votes().then((results) => {
+        this.all_opinions = results
+        this.arrayLength = this.all_opinions.length
+        this.opinions = this.all_opinions.slice(0, this.to)
+        this.to += 6
+      })
+    },
+    scroll(){
+      window.onscroll = () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+        if (bottomOfWindow) {
+          if(this.to < this.arrayLength){
+            this.opinions = this.all_opinions.slice(0, this.to)
+            this.to += 6
+          }else{
+            this.opinions = this.all_opinions
+          }
+        }
+      };
+    },
+    loadMore(){
+    }
+  },
+  beforeMount(){
+    this.getOpinions()
+  },
+  mounted (){
+    
+    this.scroll()
   },
   data(){
-      return{
-          reason: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
-      }
+    return{
+      opinions: [],
+      all_opinions: [],
+      arrayLength: 0,
+      reason: {},
+      busy: false,
+      to: 12,
     }
+  }
 }
 </script>

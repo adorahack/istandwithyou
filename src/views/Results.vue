@@ -4,20 +4,13 @@
     <div class="container body">
         <div class="row">
             <div class="col-sm-12">
-                <p>Total Votes: <strong>200</strong></p>
+                <p>Total Votes: <strong>{{votes.length}}</strong></p>
                 <br />
-                <p>Muhammadu Buhari (APC)</p>
-                <b-progress :value="votes" :max="200" show-progress variant="success"></b-progress>
-                <br />
-                <p>Atiku Abubakar (PDP)</p>
-                <b-progress :value="votes" :max="200" show-progress variant="success"></b-progress>
-                <br />
-                <p>Donald Duke (SDP)</p>
-                <b-progress :value="votes" :max="200" show-progress variant="success"></b-progress>
-                <br />
-                <p>Omoyele Sowore (AAC)</p>
-                <b-progress :value="votes" :max="200" show-progress variant="success"></b-progress>
-                <br />
+                <div v-for="candidate in candidates" :key="candidate.id">
+                    <p>{{ candidate.name }} ({{ candidate.party }})</p>
+                    <b-progress :value="candidate.votes.length" :max="votes.length" show-progress variant="success"></b-progress>
+                    <br />
+                </div>
             </div>
         </div>
     </div>
@@ -28,6 +21,7 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import { candidates, votes } from '@/utils/data.js'
 
 export default {
   name: 'results',
@@ -35,10 +29,29 @@ export default {
     Header,
     Footer
   },
+  mounted(){
+    this.getAllVotes()
+    this.getAllCandidates()
+  },
   data(){
-      return{
-          votes: 4
-      }
+    return{
+      votes: [],
+      candidates: []
     }
+  },
+  methods: {
+    getAllCandidates: function(){
+      candidates().then((results) => {
+        console.log(results)
+        this.candidates = results
+      })
+    },
+    getAllVotes: function(){
+      votes().then((results) => {
+        console.log(results)
+        this.votes = results
+      })
+    }
+  }
 }
 </script>
