@@ -20,4 +20,11 @@ export const addVote = (candidateVote) =>
         'Content-Type': 'application/json'
     },
     body: JSON.stringify( candidateVote )
-  }).then(res => res.json())
+  }).then(res => {
+      let data = res.json();
+      if (res.status >= 200 && res.status < 300) {
+          return data;
+      } else {
+          return data.then(err => {throw err;});
+      }
+  });

@@ -20,7 +20,7 @@
           </div>
           <div class="col-6">
             <p class="small">
-              Feel free to download this image and post on your social media accounts using the hashtags 
+              Feel free to download this image and post on your social media accounts using the hashtags
               <br />
               <strong>#IStandWithYou</strong>
               <br />
@@ -38,7 +38,7 @@
     <div class="container body">
         <div class="row candidate">
             <div class="col-md-4 col-sm-4 col-12 d-none d-sm-block">
-              <div class="image" :style="{ backgroundImage: `url(` + require(`@/assets/${id}.jpg`) + `)`, 
+              <div class="image" :style="{ backgroundImage: `url(` + require(`@/assets/${id}.jpg`) + `)`,
                  backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}"></div>
               <p class="text-center">{{this.candidateRecord.name}} ({{this.candidateRecord.party}}) </p>
             </div>
@@ -121,9 +121,11 @@ export default {
         anonymous: this.anonymous,
       }
       addVote(candidateVote).then((results) => {
-        // console.log("Resss",results)
         // show modal
         this.$refs.voteModalRef.show()
+      }, (err) => {
+		  this.errorModalMsg = err
+		  this.$refs.errorModalRef.show()
       })
     },
     checkInput () {
@@ -145,7 +147,7 @@ export default {
       if(this.checkInput() === 'error')
         return
 
-      // save 
+      // save
       this.vote()
     },
     hideErrorModal () {
