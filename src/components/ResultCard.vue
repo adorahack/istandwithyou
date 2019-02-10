@@ -3,7 +3,7 @@
         <div class="resultcard">
             <p class="green">{{ reason.name }}</p>
             <p class="reason">{{ reason.reason }}</p>
-            <p><small class="green">- {{ reason.candidate.name }} ({{ reason.candidate.party }})</small></p>
+            <p><small class="green candidate">- {{ reason.candidate.name }} ({{ reason.candidate.party }})</small></p>
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 }
 .resultcard{
     width: 100%;
-    height: 320px;
+    height: 340px;
     background: rgb(248, 247, 247);
     border-radius: 30px;
     padding: 30px;
@@ -32,6 +32,11 @@ export default {
     -webkit-box-shadow: 0px 0px 13px -3px rgba(0,0,0,0.31);
     -moz-box-shadow: 0px 0px 13px -3px rgba(0,0,0,0.31);
     box-shadow: 0px 0px 13px -3px rgba(0,0,0,0.31);
+}
+.green.candidate{
+    height: 40px;
+    overflow: hidden !important;
+    display: block;
 }
 .green{
     color: #008751;

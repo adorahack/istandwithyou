@@ -121,7 +121,7 @@ export default {
         anonymous: this.anonymous,
       }
       addVote(candidateVote).then((results) => {
-        console.log("Resss",results)
+        // console.log("Resss",results)
         // show modal
         this.$refs.voteModalRef.show()
       })

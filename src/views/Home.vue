@@ -37,7 +37,7 @@ export default {
   methods: {
     getCandidates: function(){
       candidates().then((results) => {
-        console.log(results)
+        // console.log(results)
         this.candidates = results
       })
     }

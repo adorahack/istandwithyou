@@ -27,7 +27,7 @@ export default {
   methods: {
     getOpinions(){
       votes().then((results) => {
-        this.all_opinions = results
+        this.all_opinions = results.sort((a,b) => b.id - a.id)
         this.arrayLength = this.all_opinions.length
         this.opinions = this.all_opinions.slice(0, this.to)
         this.to += 6
